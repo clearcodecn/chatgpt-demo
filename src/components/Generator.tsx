@@ -45,15 +45,19 @@ export default () => {
           content: currentSystemRoleSettings(),
         })
       }
+      let msgs = requestMessageList
+      if (msgs.length >= 3 ) {
+          msgs = [msgs[msgs.length - 3], msgs[msgs.length - 2], msgs[msgs.length - 1]]
+      }
       const timestamp = Date.now()
       const response = await fetch('/api/generate', {
         method: 'POST',
         body: JSON.stringify({
-          messages: requestMessageList,
+          messages: msgs,
           time: timestamp,
           sign: await generateSignature({
             t: timestamp,
-            m: requestMessageList?.[requestMessageList.length - 1]?.content || '',
+            m: msgs?.[msgs.length - 1]?.content || '',
           }),
         }),
         signal: controller.signal,
