@@ -38,4 +38,6 @@ export default defineConfig({
       process.env.OUTPUT == 'vercel' && vercelDisableBlocks(),
     ]
   },
+  server: { port: 1234, host: true}
+
 });
